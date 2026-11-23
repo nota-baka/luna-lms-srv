@@ -1,5 +1,7 @@
 package config
 
+import "fmt"
+
 // DatabasePostgresConfig is configuration of PostgreSQL database
 type DatabasePostgresConfig struct {
 	Host         string `toml:"host"`
@@ -14,6 +16,17 @@ type DatabaseType int
 const (
 	DatabaseTypePostgres DatabaseType = iota
 )
+
+func (t *DatabaseType) UnmarshalText(text []byte) error {
+	textStr := string(text)
+	switch textStr {
+	case "postgres":
+		*t = DatabaseTypePostgres
+	default:
+		return fmt.Errorf("unknown DatabaseType value: %s", textStr)
+	}
+	return nil
+}
 
 // DatabaseConfig is configuration of database
 type DatabaseConfig struct {
@@ -33,6 +46,19 @@ const (
 	ServerModeProd
 )
 
+func (m *ServerMode) UnmarshalText(text []byte) error {
+	textStr := string(text)
+	switch textStr {
+	case "debug":
+		*m = ServerModeDebug
+	case "prod":
+		*m = ServerModeProd
+	default:
+		return fmt.Errorf("unknown ServerMode value: %s", textStr)
+	}
+	return nil
+}
+
 // ServerConfig is configuration of server
 type ServerConfig struct {
 	Mode ServerMode      `toml:"mode"`
@@ -42,7 +68,7 @@ type ServerConfig struct {
 
 // EncryptionConfig is configuration of encryption
 type EncryptionConfig struct {
-	Key []byte `toml:"key"`
+	Key string `toml:"key"`
 }
 
 // Config is full application configuration
@@ -50,4 +76,15 @@ type Config struct {
 	Server     ServerConfig     `toml:"server"`
 	Encryption EncryptionConfig `toml:"encryption"`
 	Database   DatabaseConfig   `toml:"database"`
+}
+
+// NewConfig creates, loads and returns new configuration instance
+func NewConfig() (*Config, error) {
+	var c Config
+	if err := loadFromTOML(&c); err != nil {
+		return nil, fmt.Errorf("failed to load config from TOML: %w", err)
+	}
+	// TODO: add debug log
+	// speaker.DebugLog(&c)
+	return &c, nil
 }
