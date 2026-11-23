@@ -86,6 +86,12 @@ func NewConfig() (*Config, error) {
 	if err := loadFromTOML(&c); err != nil {
 		return nil, fmt.Errorf("failed to load config from TOML: %w", err)
 	}
+	if err := loadFromEnv(&c); err != nil {
+		return nil, fmt.Errorf("failed to load config from env: %w", err)
+	}
+	if err := validate(&c); err != nil {
+		return nil, fmt.Errorf("failed to validate config: %w", err)
+	}
 	// TODO: add debug log
 	// speaker.DebugLog(&c)
 	return &c, nil
