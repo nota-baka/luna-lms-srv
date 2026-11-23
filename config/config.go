@@ -14,7 +14,8 @@ type DatabasePostgresConfig struct {
 type DatabaseType int
 
 const (
-	DatabaseTypePostgres DatabaseType = iota
+	DatabaseTypeUndefined DatabaseType = iota
+	DatabaseTypePostgres
 )
 
 func (t *DatabaseType) UnmarshalText(text []byte) error {
@@ -42,7 +43,8 @@ type ServerSSLConfig struct {
 type ServerMode int
 
 const (
-	ServerModeDebug ServerMode = iota
+	ServerModeUndefined ServerMode = iota
+	ServerModeDebug
 	ServerModeProd
 )
 
