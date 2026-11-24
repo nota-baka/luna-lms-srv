@@ -20,7 +20,7 @@ type Account struct {
 	passwordHash []byte
 }
 
-type Devices struct {
+type Device struct {
 	id             string
 	accountId      string
 	lastOnlineAt   time.Time
@@ -35,10 +35,4 @@ type TOTP struct {
 	failedAttempts int
 	lockedUntil    time.Time
 	confirmed      bool
-}
-
-type TOTPAttempts struct {
-	id        string
-	accountId string
-	expiresAt time.Time
 }
