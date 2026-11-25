@@ -29,3 +29,9 @@ type Devices interface {
 	Modify(c *context.Context, device *entities.Device) error
 	Remove(c *context.Context, device *entities.Device) error
 }
+
+type DB interface {
+	Accounts() Accounts
+	TOTPs() TOTPs
+	Devices() Devices
+}
