@@ -32,9 +32,7 @@ func loadFromTOML(c *Config) error {
 // loadFromEnv loads configuration from environment variables
 func loadFromEnv(c *Config) error {
 	if serverMode := os.Getenv("LUNASRV_SERVER_MODE"); serverMode != "" {
-		if err := c.Server.Mode.UnmarshalText([]byte(serverMode)); err != nil {
-			return fmt.Errorf("failed to parse server mode: %w", err)
-		}
+		c.Server.Mode = ServerMode(serverMode)
 	}
 	if serverPort := os.Getenv("LUNASRV_SERVER_PORT"); serverPort != "" {
 		if p, err := strconv.Atoi(serverPort); err != nil {
@@ -50,9 +48,7 @@ func loadFromEnv(c *Config) error {
 		c.Encryption.Key = encryptionKey
 	}
 	if databaseType := os.Getenv("LUNASRV_DATABASE_TYPE"); databaseType != "" {
-		if err := c.Database.Type.UnmarshalText([]byte(databaseType)); err != nil {
-			return fmt.Errorf("failed to parse database type: %w", err)
-		}
+		c.Database.Type = DatabaseType(databaseType)
 	}
 	if databasePostgresHost := os.Getenv("LUNASRV_DATABASE_POSTGRES_HOST"); databasePostgresHost != "" {
 		c.Database.Postgres.Host = databasePostgresHost

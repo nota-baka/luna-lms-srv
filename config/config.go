@@ -11,23 +11,12 @@ type DatabasePostgresConfig struct {
 	DatabaseName string `toml:"database_name"`
 }
 
-type DatabaseType int
+type DatabaseType string
 
 const (
-	DatabaseTypeUndefined DatabaseType = iota
-	DatabaseTypePostgres
+	DatabaseTypeUndefined DatabaseType = "undefined"
+	DatabaseTypePostgres  DatabaseType = "postgres"
 )
-
-func (t *DatabaseType) UnmarshalText(text []byte) error {
-	textStr := string(text)
-	switch textStr {
-	case "postgres":
-		*t = DatabaseTypePostgres
-	default:
-		return fmt.Errorf("unknown DatabaseType value: %s", textStr)
-	}
-	return nil
-}
 
 // DatabaseConfig is configuration of database
 type DatabaseConfig struct {
@@ -40,26 +29,13 @@ type ServerSSLConfig struct {
 	Enabled bool `toml:"enabled"`
 }
 
-type ServerMode int
+type ServerMode string
 
 const (
-	ServerModeUndefined ServerMode = iota
-	ServerModeDebug
-	ServerModeProd
+	ServerModeUndefined ServerMode = "undefined"
+	ServerModeDebug     ServerMode = "debug"
+	ServerModeProd      ServerMode = "prod"
 )
-
-func (m *ServerMode) UnmarshalText(text []byte) error {
-	textStr := string(text)
-	switch textStr {
-	case "debug":
-		*m = ServerModeDebug
-	case "prod":
-		*m = ServerModeProd
-	default:
-		return fmt.Errorf("unknown ServerMode value: %s", textStr)
-	}
-	return nil
-}
 
 // ServerConfig is configuration of server
 type ServerConfig struct {
