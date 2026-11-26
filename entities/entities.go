@@ -13,26 +13,26 @@ const (
 )
 
 type Account struct {
-	id           string
-	role         AccountRole
-	name         string
-	email        string
-	passwordHash []byte
+	Id           string
+	Role         AccountRole
+	Name         string
+	Email        string
+	PasswordHash []byte
 }
 
 type Device struct {
-	id             string
-	accountId      string
-	lastOnlineAt   time.Time
-	tokenHash      []byte
-	tokenExpiresAt time.Time
+	Id             string
+	AccountId      string
+	LastOnlineAt   time.Time
+	TokenHash      []byte
+	TokenExpiresAt time.Time
 }
 
 type TOTP struct {
-	accountId      string
-	secretEnc      string
-	lastUsedStep   int64
-	failedAttempts int
-	lockedUntil    time.Time
-	confirmed      bool
+	AccountId      string
+	SecretEnc      string
+	LastUsedStep   int64
+	FailedAttempts int
+	LockedUntil    time.Time
+	Confirmed      bool
 }
