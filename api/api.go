@@ -17,5 +17,6 @@ type Auth interface {
 }
 
 type API interface {
+	Srv() Srv
 	Auth() Auth
 }
