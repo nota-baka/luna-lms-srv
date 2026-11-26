@@ -20,11 +20,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer func() {
+	defer func(dbw db.DB) {
 		if err := dbw.Close(); err != nil {
 			log.Fatal(err)
 		}
-	}()
+	}(dbw)
 
 	apiw, err := prepareAPI(dbw)
 	if err != nil {
