@@ -47,7 +47,7 @@ func NewPostgresWrapper(c *config.DatabasePostgresConfig) (*PostgresWrapper, err
 		return nil, fmt.Errorf("error connecting to postgresql database: %w", err)
 	}
 	if err = db.Ping(); err != nil {
-		return nil, fmt.Errorf("error pining postgresql database: %w", err)
+		return nil, fmt.Errorf("error pinging postgresql database: %w", err)
 	}
 
 	return &PostgresWrapper{
