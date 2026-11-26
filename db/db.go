@@ -35,4 +35,5 @@ type DB interface {
 	Accounts() Accounts
 	TOTPs() TOTPs
 	Devices() Devices
+	Close() error
 }
