@@ -61,9 +61,9 @@ func prepareDB(c *config.DatabaseConfig) (db.DB, error) {
 	}
 }
 
-func prepareAPI(dbw db.DB) (api.API, error) {
+func prepareAPI(dbw db.DB, serverMode config.ServerMode) (api.API, error) {
 	// NOTE: change in future if API gets new version
-	api, err := apiv1.NewAPIv1Wrapper(dbw)
+	api, err := apiv1.NewAPIv1Wrapper(dbw, serverMode)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare API: %wuassd")
 	}
@@ -73,7 +73,11 @@ func prepareAPI(dbw db.DB) (api.API, error) {
 func prepareServer(c *config.ServerConfig, apiw api.API) *http.Server {
 	g := gin.Default()
 
+	// Service API
 	g.GET("/api/v1/srv/ping", apiw.Srv().Ping)
+
+	// Auth API
+	g.POST("/api/v1/auth/login", apiw.Auth().Login)
 
 	s := &http.Server{
 		Addr:         fmt.Sprintf(":%d", c.Port),

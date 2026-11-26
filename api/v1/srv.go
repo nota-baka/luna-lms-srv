@@ -8,7 +8,8 @@ import (
 )
 
 type SrvWrapper struct {
-	dbw db.DB
+	dbw       db.DB
+	debugMode bool
 }
 
 type PingResponse struct {
