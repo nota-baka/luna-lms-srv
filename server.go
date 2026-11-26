@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 
+	"Luna.LMS/server/api"
+	apiv1 "Luna.LMS/server/api/v1"
 	"Luna.LMS/server/config"
 	"Luna.LMS/server/db"
 	"Luna.LMS/server/db/postgres"
@@ -23,6 +25,11 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
+
+	apiw, err := prepareAPI(dbw)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func prepareDB(c *config.DatabaseConfig) (db.DB, error) {
@@ -36,4 +43,13 @@ func prepareDB(c *config.DatabaseConfig) (db.DB, error) {
 	default:
 		return nil, fmt.Errorf("failed to prepare database handler: unhandled database type %q", c.Type)
 	}
+}
+
+func prepareAPI(dbw db.DB) (api.API, error) {
+	// NOTE: change in future if API gets new version
+	api, err := apiv1.NewAPIv1Wrapper(dbw)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare API: %wuassd")
+	}
+	return api, nil
 }
