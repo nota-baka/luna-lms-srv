@@ -6,7 +6,7 @@ TODO: add description
 ## Service
 - Ping
 ```
-/v1/srv/ping GET
+/api/v1/srv/ping GET
 ---
 none
 ---
@@ -21,7 +21,7 @@ An authentication is not required.
 ## Authentication
 - Login into account
 ```
-/v1/auth/login/init POST
+/api/v1/auth/login POST
 ---
 {
     "email": string,
@@ -40,7 +40,7 @@ If a TOTP authentication is required, an HTTP-only cookie with the TOTP attempt 
 
 - Logout from account
 ```
-/v1/auth/logout POST
+/api/v1/auth/logout POST
 ---
 none
 ---
@@ -51,7 +51,7 @@ any
 
 - Confirm TOTP
 ```
-/v1/auth/login/confirm_totp POST
+/api/v1/auth/login_with_totp POST
 ---
 {
     "code": string
@@ -68,7 +68,7 @@ any
 
 - Initialise TOTP setup
 ```
-/v1/auth/totp/setup/init
+/api/v1/auth/totp/setup/init
 ---
 none
 ---
@@ -82,7 +82,7 @@ A TOTP is considered not confirmed until a successful TOTP confirmation is done.
 
 - Confirm TOTP setup
 ```
-/v1/auth/totp/setup/confirm
+/api/v1/auth/totp/setup/confirm
 ---
 {
     "totp_code": string
