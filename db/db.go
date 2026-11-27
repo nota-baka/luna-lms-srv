@@ -13,14 +13,14 @@ type Accounts interface {
 	GetByDeviceId(c context.Context, id string) (*entities.Account, error)
 	GetByEmail(c context.Context, email string) (*entities.Account, error)
 	Modify(c context.Context, acc *entities.Account) error
-	Remove(c context.Context, acc *entities.Account) error
+	RemoveById(c context.Context, id string) error
 }
 
 type TOTPs interface {
 	Add(c context.Context, totp *entities.TOTP) error
 	GetByAccountId(c context.Context, id string) (*entities.TOTP, error)
 	Modify(c context.Context, totp *entities.TOTP) error
-	Remove(c context.Context, totp *entities.TOTP) error
+	RemoveById(c context.Context, id string) error
 }
 
 type TOTPsAttempts interface {
@@ -35,12 +35,13 @@ type Devices interface {
 	GetById(c context.Context, id string) (*entities.Device, error)
 	GetByAccountId(c context.Context, id string) ([]entities.Device, error)
 	Modify(c context.Context, device *entities.Device) error
-	Remove(c context.Context, device *entities.Device) error
+	RemoveById(c context.Context, ids string) error
 }
 
 type DB interface {
 	Accounts() Accounts
 	TOTPs() TOTPs
+	TOTPsAttempts() TOTPsAttempts
 	Devices() Devices
 	Close() error
 }
