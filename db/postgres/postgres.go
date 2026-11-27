@@ -29,7 +29,7 @@ func (w *PostgresWrapper) TOTPs() db.TOTPs {
 	return w.totpsWrapper
 }
 
-func (w *PostgresWrapper) TOTPsAttemptsWrapper() db.TOTPsAttempts {
+func (w *PostgresWrapper) TOTPsAttempts() db.TOTPsAttempts {
 	return w.totpsAttemptsWrapper
 }
 
