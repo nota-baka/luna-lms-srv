@@ -32,7 +32,7 @@ func (w *AccountsWrapper) GetById(c context.Context, id string) (*entities.Accou
 
 func (w *AccountsWrapper) GetByDeviceId(c context.Context, id string) (*entities.Account, error) {
 	var acc entities.Account
-	err := w.db.QueryRowContext(c, "SELECT a.id, a.role, a.name, a.email_address, a.password_hash FROM accounts AS a JOIN devices AS b ON a.id = b.account_id WHERE b.id = $1", id).Scan(&acc.Id, &acc.Email, &acc.Name, &acc.Role, &acc.PasswordHash)
+	err := w.db.QueryRowContext(c, "SELECT a.id, a.role, a.name, a.email_address, a.password_hash FROM accounts AS a JOIN devices AS d ON a.id = d.account_id WHERE d.id = $1", id).Scan(&acc.Id, &acc.Email, &acc.Name, &acc.Role, &acc.PasswordHash)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get account by device id: %w", err)
 	}
