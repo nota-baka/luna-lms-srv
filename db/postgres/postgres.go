@@ -10,10 +10,11 @@ import (
 )
 
 type PostgresWrapper struct {
-	db              *sql.DB
-	accountsWrapper *AccountsWrapper
-	totpsWrapper    *TOTPsWrapper
-	devicesWrapper  *DevicesWrapper
+	db                   *sql.DB
+	accountsWrapper      *AccountsWrapper
+	totpsWrapper         *TOTPsWrapper
+	totpsAttemptsWrapper *TOTPsAttemptsWrapper
+	devicesWrapper       *DevicesWrapper
 }
 
 func (w *PostgresWrapper) Close() error {
@@ -26,6 +27,10 @@ func (w *PostgresWrapper) Accounts() db.Accounts {
 
 func (w *PostgresWrapper) TOTPs() db.TOTPs {
 	return w.totpsWrapper
+}
+
+func (w *PostgresWrapper) TOTPsAttemptsWrapper() db.TOTPsAttempts {
+	return w.totpsAttemptsWrapper
 }
 
 func (w *PostgresWrapper) Devices() db.Devices {
@@ -51,9 +56,10 @@ func NewPostgresWrapper(c *config.DatabasePostgresConfig) (*PostgresWrapper, err
 	}
 
 	return &PostgresWrapper{
-		db:              db,
-		accountsWrapper: &AccountsWrapper{db: db},
-		totpsWrapper:    &TOTPsWrapper{db: db},
-		devicesWrapper:  &DevicesWrapper{db: db},
+		db:                   db,
+		accountsWrapper:      &AccountsWrapper{db: db},
+		totpsWrapper:         &TOTPsWrapper{db: db},
+		totpsAttemptsWrapper: &TOTPsAttemptsWrapper{db: db},
+		devicesWrapper:       &DevicesWrapper{db: db},
 	}, nil
 }

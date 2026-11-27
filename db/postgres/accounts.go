@@ -41,7 +41,7 @@ func (w *AccountsWrapper) Modify(c context.Context, acc *entities.Account) error
 	panic("implement me")
 }
 
-func (w *AccountsWrapper) Remove(c context.Context, acc *entities.Account) error {
+func (w *AccountsWrapper) RemoveById(c context.Context, id string) error {
 	// TODO: implement me
 	panic("implement me")
 }

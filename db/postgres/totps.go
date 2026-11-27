@@ -26,7 +26,7 @@ func (w *TOTPsWrapper) Modify(c context.Context, totp *entities.TOTP) error {
 	panic("implement me")
 }
 
-func (w *TOTPsWrapper) Remove(c context.Context, totp *entities.TOTP) error {
+func (w *TOTPsWrapper) RemoveById(c context.Context, id string) error {
 	// TODO: implement me
 	panic("implement me")
 }

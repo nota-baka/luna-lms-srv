@@ -31,7 +31,7 @@ func (w *DevicesWrapper) Modify(c context.Context, device *entities.Device) erro
 	panic("implement me")
 }
 
-func (w *DevicesWrapper) Remove(c context.Context, device *entities.Device) error {
+func (w *DevicesWrapper) RemoveById(c context.Context, id string) error {
 	// TODO: implement me
 	panic("implement me")
 }
