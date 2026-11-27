@@ -22,7 +22,7 @@ func (w *TOTPsAttemptsWrapper) Add(c context.Context, attempt *entities.TOTPAtte
 
 func (w *TOTPsAttemptsWrapper) GetById(c context.Context, id string) (*entities.TOTPAttempt, error) {
 	var attempt entities.TOTPAttempt
-	err := w.db.QueryRowContext(c, "SELECT id, account_id, expires_at")
+	err := w.db.QueryRowContext(c, "SELECT id, account_id, expires_at").Scan(&attempt.Id, &attempt.AccountId, &attempt.ExpiresAt)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get totp attempt by id: %w", err)
 	}
