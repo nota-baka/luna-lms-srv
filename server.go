@@ -29,7 +29,7 @@ func main() {
 		}
 	}(dbw)
 
-	apiw, err := prepareAPI(dbw)
+	apiw, err := prepareAPI(dbw, conf.Server.Mode)
 	if err != nil {
 		log.Fatal(err)
 	}
