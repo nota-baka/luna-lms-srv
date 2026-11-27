@@ -58,7 +58,7 @@ func (w *AccountsWrapper) Modify(c context.Context, acc *entities.Account) error
 }
 
 func (w *AccountsWrapper) RemoveById(c context.Context, id string) error {
-	_, err := w.db.ExecContext(c, "DELETE FROM Accounts WHERE id = $1", id)
+	_, err := w.db.ExecContext(c, "DELETE FROM accounts WHERE id = $1", id)
 	if err != nil {
 		return fmt.Errorf("failed to remove account by id: %w", err)
 	}

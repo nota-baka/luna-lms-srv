@@ -13,7 +13,7 @@ type DevicesWrapper struct {
 }
 
 func (w *DevicesWrapper) Add(c context.Context, device *entities.Device) error {
-	_, err := w.db.ExecContext(c, "INSERT INTO Devices (id, account_id, last_online_at, session_token_hash, session_expires_at) VALUES ($1, $2, $3, $4, $5)",
+	_, err := w.db.ExecContext(c, "INSERT INTO devices (id, account_id, last_online_at, session_token_hash, session_expires_at) VALUES ($1, $2, $3, $4, $5)",
 		device.Id, device.AccountId, device.LastOnlineAt, device.TokenHash, device.TokenExpiresAt)
 	if err != nil {
 		return fmt.Errorf("failed to add device: %w", err)
