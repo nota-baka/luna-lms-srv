@@ -29,9 +29,8 @@ type ResponseLogin struct {
 }
 
 func (w *AuthWrapper) Login(g *gin.Context) {
-	// TODO: implement me
 	var body RequestLogin
-	if err := g.ShouldBindJSON(&body); err != nil || body.Email != "" || body.Password != "" {
+	if err := g.ShouldBindJSON(&body); err != nil || body.Email == "" || body.Password == "" {
 		g.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
@@ -44,7 +43,7 @@ func (w *AuthWrapper) Login(g *gin.Context) {
 		g.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
-	if totp, err := w.dbw.TOTPs().GetByAccountId(g.Request.Context(), account.Id); err != nil {
+	if _, err := w.dbw.TOTPs().GetByAccountId(g.Request.Context(), account.Id); err != nil {
 		token, err := cryptohelpers.GenerateToken()
 		if err != nil {
 			g.AbortWithError(http.StatusInternalServerError, err)
@@ -73,7 +72,18 @@ func (w *AuthWrapper) Login(g *gin.Context) {
 		return
 	}
 
-	// TODO: add TOTP attempt return
+	totpAttempt := entities.TOTPAttempt{
+		Id:        uuid.NewV7().String(),
+		AccountId: account.Id,
+		ExpiresAt: time.Now().Add(time.Minute * 5),
+	}
+	err = w.dbw.TOTPsAttempts().Add(g.Request.Context(), &totpAttempt)
+	if err != nil {
+		g.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	g.SetCookie("totp_attempt_id", totpAttempt.Id, int(time.Until(totpAttempt.ExpiresAt)), "/", "localhost", !w.debugMode, true)
+	g.Status(http.StatusOK)
 }
 
 func (w *AuthWrapper) Logout(g *gin.Context) {
