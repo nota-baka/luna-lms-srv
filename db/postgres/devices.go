@@ -32,7 +32,6 @@ func (w *DevicesWrapper) GetById(c context.Context, id string) (*entities.Device
 }
 
 func (w *DevicesWrapper) GetByAccountId(c context.Context, id string) ([]entities.Device, error) {
-	// TODO: implement me
 	var devs []entities.Device
 	rows, err := w.db.QueryContext(c, "SELECT d.id, d.account_id, d.last_online_at, d.session_token_hash, d.session_expires_at FROM devices AS d JOIN accounts AS a ON a.id = d.account_id WHERE a.id = $1", id)
 	if err != nil {
