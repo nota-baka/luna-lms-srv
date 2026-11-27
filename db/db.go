@@ -11,7 +11,7 @@ type Accounts interface {
 	GetById(c context.Context, id string) (*entities.Account, error)
 	GetByIds(c context.Context, ids []string) ([]entities.Account, error)
 	GetByDeviceId(c context.Context, id string) (*entities.Account, error)
-	GetByEmail(c context.Context, id string) (*entities.Account, error)
+	GetByEmail(c context.Context, email string) (*entities.Account, error)
 	Modify(c context.Context, acc *entities.Account) error
 	Remove(c context.Context, acc *entities.Account) error
 }

@@ -31,9 +31,9 @@ func (w *AccountsWrapper) GetByDeviceId(c context.Context, id string) (*entities
 	panic("implement me")
 }
 
-func (w *AccountsWrapper) GetByEmail(c context.Context, id string) (*entities.Account, error) {
+func (w *AccountsWrapper) GetByEmail(c context.Context, email string) (*entities.Account, error) {
 	// TODO: implement me
-	panic("implement me")
+
 }
 
 func (w *AccountsWrapper) Modify(c context.Context, acc *entities.Account) error {
