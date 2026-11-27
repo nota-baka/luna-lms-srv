@@ -23,6 +23,13 @@ type TOTPs interface {
 	Remove(c context.Context, totp *entities.TOTP) error
 }
 
+type TOTPsAttempts interface {
+	Add(c context.Context, attempt *entities.TOTPAttempt) error
+	GetById(c context.Context, id string) (*entities.TOTPAttempt, error)
+	Modify(c context.Context, attempt *entities.TOTPAttempt) error
+	RemoveById(c context.Context, id string) error
+}
+
 type Devices interface {
 	Add(c context.Context, device *entities.Device) error
 	GetById(c context.Context, id string) (*entities.Device, error)

@@ -36,3 +36,9 @@ type TOTP struct {
 	LockedUntil    time.Time
 	Confirmed      bool
 }
+
+type TOTPAttempt struct {
+	Id        string
+	AccountId string
+	ExpiresAt time.Time
+}
